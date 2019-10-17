@@ -18,6 +18,7 @@ export class ListDialogComponent implements OnInit {
   public profiles: Array<any>;
   public foundWatchlistResults: boolean = false;
   public watchlistError: boolean = false;
+  public monitorFirstSeasonOnly: boolean = true;
 
   constructor(
     public dialogRef: MatDialogRef<ListDialogComponent>,

@@ -5,7 +5,7 @@ import { SonarrRepository } from '../repositories';
 @injectable()
 export class SonarrService {
 
-    constructor( @inject("SonarrRepository") private sonarrRepository: SonarrRepository) { }
+    constructor(@inject("SonarrRepository") private sonarrRepository: SonarrRepository) { }
 
     public async upsertSeasons(series: Array<any>, settings) {
         let listOfSeries = new Array<any>();
@@ -106,6 +106,13 @@ export class SonarrService {
                 let results = await this.sonarrRepository.searchSeries(show.title);
                 if (results && results.length > 0) {
                     let firstShow = results.find(s => s.tvdbId === show.ids.tvdb);
+                    if (settings.monitorFirstSeasonOnly) {
+                        //Monitor only first season
+                        firstShow.seasons.map((s) => {
+                            if (s.seasonNumber != 1)
+                                s.monitored = false;
+                        });
+                    }
                     await this.createSeasons(Object.assign(firstShow, {
                         qualityProfileId: settings.profile,
                         path: `${settings.folder}${firstShow.title}`

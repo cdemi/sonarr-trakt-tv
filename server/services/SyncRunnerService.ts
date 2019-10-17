@@ -33,8 +33,8 @@ export class SyncRunnerService {
         if (list && list.length > 0) {
             for (let item of list) {
                 if (item.enabled && item.listType === ListTypesEnum.Watchlist) {
-                    let seasons = await this.traktTVService.findWatchlistSeasonsByUsername(item.username);
-                    this.sonarrService.upsertSeasons(seasons, item);
+                    // let seasons = await this.traktTVService.findWatchlistSeasonsByUsername(item.username);
+                    // this.sonarrService.upsertSeasons(seasons, item);
 
                     let shows = await this.traktTVService.findWatchlistShowsByUsername(item.username);
                     await this.sonarrService.upsetShows(shows, item);
