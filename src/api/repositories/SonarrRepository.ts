@@ -11,7 +11,9 @@ export class SonarrRepository {
 
     public async createSeries(series) {
         let settings = await this.settingsDBRepository.findAll();
-        let response = await requestify.post(`http://${settings.hostname}:${settings.port}/api/series?apikey=${settings.apiKey}`, series);
+        let response = await requestify.post(`http://${settings.hostname}:${settings.port}/api/series?apikey=${settings.apiKey}`, series).fail(function (response) {
+            console.log('Series Add Error', response.getCode());
+          });
         return response.getBody();
     }
 
