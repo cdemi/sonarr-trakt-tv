@@ -102,7 +102,6 @@ export class SonarrService {
 
         for (let show of series) {
             let showInSonarr = currentShows.find(series => series.tvdbId === show.ids.tvdb);
-            console.log("Is Show in Sonar?", showInSonarr);
             if (!showInSonarr) {
                 let results = await this.sonarrRepository.searchSeries(show.title);
                 if (results && results.length > 0) {
