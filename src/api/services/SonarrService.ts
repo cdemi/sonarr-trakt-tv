@@ -109,6 +109,7 @@ export class SonarrService {
                     await this.createSeasons(Object.assign(firstShow, {
                         qualityProfileId: settings.profile,
                         path: `${settings.folder}${firstShow.title}`,
+                        seasonFolder: true,
                         seasons: [
                             {
                                 seasonNumber: 1,
