@@ -107,16 +107,16 @@ export class SonarrService {
                 let results = await this.sonarrRepository.searchSeries(show.title);
                 if (results && results.length > 0) {
                     let firstShow = results.find(s => s.tvdbId === show.ids.tvdb);
+                    //Monitor only first season
+                    firstShow.seasons.map((s)=>{
+                        if (s.seasonNumber != 1)
+                            s.monitored = false;
+                    });
                     console.log("Creating show in Sonarr", firstShow);
                     await this.createSeasons(Object.assign(firstShow, {
                         qualityProfileId: settings.profile,
                         path: `${settings.folder}${firstShow.title}`,
-                        seasonFolder: true,
-                        seasons: [
-                            {
-                                seasonNumber: 1,
-                                monitored: true
-                            }]
+                        seasonFolder: true
                     }));
                 }
             }
