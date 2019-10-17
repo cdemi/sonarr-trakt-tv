@@ -102,10 +102,12 @@ export class SonarrService {
 
         for (let show of series) {
             let showInSonarr = currentShows.find(series => series.tvdbId === show.ids.tvdb);
+            console.log("Is Show in Sonar?", showInSonarr);
             if (!showInSonarr) {
                 let results = await this.sonarrRepository.searchSeries(show.title);
                 if (results && results.length > 0) {
                     let firstShow = results.find(s => s.tvdbId === show.ids.tvdb);
+                    console.log("Creating show in Sonarr", firstShow);
                     await this.createSeasons(Object.assign(firstShow, {
                         qualityProfileId: settings.profile,
                         path: `${settings.folder}${firstShow.title}`,
